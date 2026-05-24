@@ -1,0 +1,85 @@
+@model ReservasFodun.Application.DTOs.Reservas.CrearReservaRequest
+
+@{
+    ViewData["Title"] = "Confirmar reserva";
+    var sedes = ViewBag.Sedes as IEnumerable<ReservasFodun.Application.DTOs.Alojamientos.SedeDto>
+        ?? Enumerable.Empty<ReservasFodun.Application.DTOs.Alojamientos.SedeDto>();
+}
+
+<div class="container py-4">
+    <h2>Confirmar reserva</h2>
+
+    @if (TempData["Error"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Confirmar" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Sede</label>
+                    <select class="form-select" asp-for="IdSede">
+                        <option value="">Seleccione una sede</option>
+                        @foreach (var sede in sedes)
+                        {
+                            <option value="@sede.IdSede">@sede.NombreSede</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="IdAlojamiento" class="form-label">Id Alojamiento</label>
+                        <input asp-for="IdAlojamiento" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="FechaLlegada" class="form-label">Fecha llegada</label>
+                        <input asp-for="FechaLlegada" type="date" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="FechaSalida" class="form-label">Fecha salida</label>
+                        <input asp-for="FechaSalida" type="date" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="NumeroPersonas" class="form-label">Personas</label>
+                        <input asp-for="NumeroPersonas" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="NumeroHabitaciones" class="form-label">Habitaciones</label>
+                        <input asp-for="NumeroHabitaciones" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="ValorSubtotal" class="form-label">Subtotal</label>
+                        <input asp-for="ValorSubtotal" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="ValorTotal" class="form-label">Total</label>
+                        <input asp-for="ValorTotal" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Observaciones" class="form-label">Observaciones</label>
+                    <textarea asp-for="Observaciones" class="form-control" rows="3"></textarea>
+                </div>
+
+                <button class="btn btn-success" type="submit">
+                    Confirmar reserva
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

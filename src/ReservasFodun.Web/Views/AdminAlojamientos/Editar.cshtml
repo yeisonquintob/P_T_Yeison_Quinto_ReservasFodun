@@ -1,0 +1,32 @@
+﻿@model ReservasFodun.Application.DTOs.Admin.AlojamientoFormularioRequest
+
+@{
+    ViewData["Title"] = "Editar alojamiento";
+}
+
+<div class="mb-4">
+    <h1 class="page-title">Editar alojamiento</h1>
+    <p class="page-subtitle">Actualiza la información del alojamiento seleccionado.</p>
+</div>
+
+<div class="section-card">
+    <form asp-action="Editar" method="post">
+        @Html.AntiForgeryToken()
+
+        <input asp-for="IdAlojamiento" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <partial name="_FormularioAlojamiento" model="Model" />
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <a asp-action="Detalle" asp-route-id="@Model.IdAlojamiento" class="btn btn-outline-primary">Ver detalle</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

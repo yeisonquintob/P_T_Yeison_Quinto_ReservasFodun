@@ -1,0 +1,112 @@
+@page
+@model ReservasFodun.Web.Areas.Identity.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Registro de usuario";
+}
+
+<div class="container py-4">
+    <h2>Registro de usuario</h2>
+    <p class="text-muted">
+        Crea tu cuenta para consultar disponibilidad, realizar reservas y administrar tu perfil.
+    </p>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <h5>Datos de acceso</h5>
+                        <hr />
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label">Correo electrónico</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Password" class="form-label">Contraseña</label>
+                                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.ConfirmPassword" class="form-label">Confirmar contraseña</label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4">Datos personales</h5>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Input.TipoDocumento" class="form-label">Tipo documento</label>
+                                <select asp-for="Input.TipoDocumento" class="form-select">
+                                    <option value="">Seleccione</option>
+                                    <option value="CC">Cédula de ciudadanía</option>
+                                    <option value="CE">Cédula de extranjería</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option value="PA">Pasaporte</option>
+                                </select>
+                                <span asp-validation-for="Input.TipoDocumento" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <label asp-for="Input.NumeroDocumento" class="form-label">Número documento</label>
+                                <input asp-for="Input.NumeroDocumento" class="form-control" />
+                                <span asp-validation-for="Input.NumeroDocumento" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Nombres" class="form-label">Nombres</label>
+                                <input asp-for="Input.Nombres" class="form-control" />
+                                <span asp-validation-for="Input.Nombres" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Apellidos" class="form-label">Apellidos</label>
+                                <input asp-for="Input.Apellidos" class="form-control" />
+                                <span asp-validation-for="Input.Apellidos" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Telefono" class="form-label">Teléfono</label>
+                            <input asp-for="Input.Telefono" class="form-control" />
+                            <span asp-validation-for="Input.Telefono" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Direccion" class="form-label">Dirección</label>
+                            <input asp-for="Input.Direccion" class="form-control" />
+                            <span asp-validation-for="Input.Direccion" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">
+                            Registrarme
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 mt-4 mt-md-0">
+            <div class="alert alert-info">
+                <strong>Importante:</strong>
+                después de registrarte podrás iniciar sesión, consultar disponibilidad y crear reservas.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

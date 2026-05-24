@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ReservasFodun.Application.DTOs.Admin.SedeAdminDto>
+
+@{
+    ViewData["Title"] = "Administrar sedes";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">Administrar sedes</h1>
+        <p class="page-subtitle">Gestiona las sedes recreativas y apartamentos disponibles para reservas.</p>
+    </div>
+
+    <a asp-action="Crear" class="btn btn-primary">
+        Crear sede
+    </a>
+</div>
+
+@if (Model is null || !Model.Any())
+{
+    <div class="alert alert-info">
+        No hay sedes registradas.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Municipio</th>
+                    <th>Departamento</th>
+                    <th>Capacidad</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sede in Model)
+                {
+                    <tr>
+                        <td>@sede.IdSede</td>
+                        <td>
+                            <strong>@sede.NombreSede</strong>
+                            @if (!string.IsNullOrWhiteSpace(sede.NombreCorto))
+                            {
+                                <div class="text-muted small">@sede.NombreCorto</div>
+                            }
+                        </td>
+                        <td>@sede.TipoSede</td>
+                        <td>@sede.Municipio</td>
+                        <td>@sede.Departamento</td>
+                        <td>@sede.CapacidadTotal</td>
+                        <td>
+                            @if (sede.Activo)
+                            {
+                                <span class="badge bg-dark">Activa</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactiva</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Detalle" asp-route-id="@sede.IdSede" class="btn btn-outline-primary btn-sm">
+                                    Ver
+                                </a>
+
+                                <a asp-action="Editar" asp-route-id="@sede.IdSede" class="btn btn-primary btn-sm">
+                                    Editar
+                                </a>
+
+                                @if (sede.Activo)
+                                {
+                                    <form asp-action="Inactivar" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@sede.IdSede" />
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas inactivar esta sede?');">
+                                            Inactivar
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

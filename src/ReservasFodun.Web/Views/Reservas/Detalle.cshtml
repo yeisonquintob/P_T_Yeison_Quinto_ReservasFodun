@@ -1,0 +1,60 @@
+@model ReservasFodun.Application.DTOs.Reservas.ReservaDto
+
+@{
+    ViewData["Title"] = "Detalle de reserva";
+}
+
+<div class="container py-4">
+    <a class="btn btn-link px-0 mb-3" asp-action="MisReservas">? Volver a mis reservas</a>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2>Reserva #@Model.IdReserva</h2>
+            <p class="text-muted">@Model.EstadoReserva</p>
+
+            <hr />
+
+            <p><strong>Sede:</strong> @Model.NombreSede</p>
+            <p><strong>Fecha llegada:</strong> @Model.FechaLlegada.ToShortDateString()</p>
+            <p><strong>Fecha salida:</strong> @Model.FechaSalida.ToShortDateString()</p>
+            <p><strong>Personas:</strong> @Model.NumeroPersonas</p>
+            <p><strong>Habitaciones:</strong> @Model.NumeroHabitaciones</p>
+            <p><strong>Subtotal:</strong> @Model.ValorSubtotal.ToString("C0")</p>
+            <p><strong>Total:</strong> @Model.ValorTotal.ToString("C0")</p>
+            <p><strong>Observaciones:</strong> @Model.Observaciones</p>
+
+            <h5 class="mt-4">Detalle de alojamientos</h5>
+
+            @if (!Model.Detalles.Any())
+            {
+                <div class="alert alert-info">No hay detalles asociados.</div>
+            }
+            else
+            {
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Alojamiento</th>
+                            <th>Tipo</th>
+                            <th>Personas</th>
+                            <th>Habitaciones</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detalle in Model.Detalles)
+                        {
+                            <tr>
+                                <td>@detalle.NombreAlojamiento</td>
+                                <td>@detalle.TipoAlojamiento</td>
+                                <td>@detalle.NumeroPersonas</td>
+                                <td>@detalle.NumeroHabitaciones</td>
+                                <td>@detalle.ValorTotal.ToString("C0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

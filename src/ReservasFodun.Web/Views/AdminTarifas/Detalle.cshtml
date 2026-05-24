@@ -1,0 +1,63 @@
+﻿@model ReservasFodun.Application.DTOs.Admin.TarifaAdminDto
+
+@{
+    ViewData["Title"] = "Detalle tarifa";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">Tarifa #@Model.IdTarifa</h1>
+        <p class="page-subtitle">Detalle administrativo de la tarifa.</p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-action="Editar" asp-route-id="@Model.IdTarifa" class="btn btn-primary">Editar</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+    </div>
+</div>
+
+<div class="section-card">
+    <dl class="row mb-0">
+        <dt class="col-sm-4">Código</dt>
+        <dd class="col-sm-8">@Model.IdTarifa</dd>
+
+        <dt class="col-sm-4">Sede</dt>
+        <dd class="col-sm-8">@Model.NombreSede</dd>
+
+        <dt class="col-sm-4">Alojamiento</dt>
+        <dd class="col-sm-8">@(Model.NombreAlojamiento ?? "No aplica")</dd>
+
+        <dt class="col-sm-4">Temporada</dt>
+        <dd class="col-sm-8">@Model.NombreTemporada</dd>
+
+        <dt class="col-sm-4">Habitaciones tarifa</dt>
+        <dd class="col-sm-8">@(Model.NumeroHabitacionesTarifa?.ToString() ?? "No aplica")</dd>
+
+        <dt class="col-sm-4">Personas incluidas</dt>
+        <dd class="col-sm-8">@Model.PersonasIncluidas</dd>
+
+        <dt class="col-sm-4">Tarifa base</dt>
+        <dd class="col-sm-8">@Model.TarifaBase.ToString("C0")</dd>
+
+        <dt class="col-sm-4">Persona adicional</dt>
+        <dd class="col-sm-8">@Model.ValorPersonaAdicional.ToString("C0")</dd>
+
+        <dt class="col-sm-4">Tarifa especial</dt>
+        <dd class="col-sm-8">@(Model.EsTarifaEspecial ? "Sí" : "No")</dd>
+
+        <dt class="col-sm-4">Descripción</dt>
+        <dd class="col-sm-8">@(Model.Descripcion ?? "No registrada")</dd>
+
+        <dt class="col-sm-4">Estado</dt>
+        <dd class="col-sm-8">
+            @if (Model.Activo)
+            {
+                <span class="badge bg-dark">Activa</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Inactiva</span>
+            }
+        </dd>
+    </dl>
+</div>

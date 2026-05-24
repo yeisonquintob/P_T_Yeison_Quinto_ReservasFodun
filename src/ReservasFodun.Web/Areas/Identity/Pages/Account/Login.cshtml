@@ -1,0 +1,70 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="identity-header mb-4">
+    <h1 class="page-title">Iniciar sesión</h1>
+    <p class="page-subtitle">Accede al sistema para consultar y administrar tus reservas.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="section-card">
+            <h2 class="h4 mb-3">Usar una cuenta registrada</h2>
+
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="correo@ejemplo.com" />
+                    <label asp-for="Input.Email">Correo electrónico</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Contraseña" />
+                    <label asp-for="Input.Password">Contraseña</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">
+                        Recordarme
+                    </label>
+                </div>
+
+                <button id="login-submit" type="submit" class="btn btn-primary">
+                    Iniciar sesión
+                </button>
+
+                <div class="mt-3 d-grid gap-2">
+                    <a id="forgot-password" asp-page="./ForgotPassword">¿Olvidaste tu contraseña?</a>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrarse como nuevo usuario</a>
+                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmación de correo</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="section-card h-100">
+            <h2 class="h4 mb-3">Información de acceso</h2>
+            <p class="text-muted">
+                Ingresa con el correo y la contraseña registrados en el sistema. Si olvidaste tu contraseña,
+                puedes solicitar un enlace de recuperación por correo electrónico.
+            </p>
+
+            <div class="alert alert-info mb-0">
+                En ambiente local, los correos de recuperación se validan con smtp4dev.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<section class="hero-card mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <span class="badge mb-3">Sistema de reservas</span>
+            <h1 class="display-5 mb-3">Sistema de Reservas Fodun</h1>
+            <p class="lead mb-4">
+                Consulta sedes, verifica disponibilidad, calcula tarifas y realiza tus reservas de forma sencilla.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-light btn-lg" asp-controller="Disponibilidad" asp-action="Index">
+                    Consultar disponibilidad
+                </a>
+                <a class="btn btn-outline-light btn-lg" asp-controller="Sedes" asp-action="Index">
+                    Ver sedes
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="section-card bg-white">
+                <h5 class="fw-bold mb-2">Opciones rápidas</h5>
+                <p class="text-muted mb-3">
+                    Accede rápidamente a las funciones principales del sistema.
+                </p>
+
+                <div class="d-grid gap-2">
+                    <a class="btn btn-outline-primary" asp-controller="Tarifas" asp-action="Calcular">
+                        Calcular tarifa
+                    </a>
+
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <a class="btn btn-outline-primary" asp-controller="Reservas" asp-action="MisReservas">
+                            Mis reservas
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Register">
+                            Crear cuenta
+                        </a>
+                    }
+
+                    <a class="btn btn-outline-secondary" href="/swagger">
+                        Probar API Swagger
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon">1</div>
+            <h5>Consulta disponibilidad</h5>
+            <p class="text-muted mb-0">
+                Selecciona fechas, sede y número de personas para revisar disponibilidad.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon">2</div>
+            <h5>Calcula tarifas</h5>
+            <p class="text-muted mb-0">
+                Obtén un valor estimado antes de crear tu reserva.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="stat-icon">3</div>
+            <h5>Administra reservas</h5>
+            <p class="text-muted mb-0">
+                Consulta el detalle y estado de tus reservas registradas.
+            </p>
+        </div>
+    </div>
+</div>

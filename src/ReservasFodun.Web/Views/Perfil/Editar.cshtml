@@ -1,0 +1,67 @@
+﻿@model ReservasFodun.Application.DTOs.Usuarios.ActualizarPerfilUsuarioRequest
+
+@{
+    ViewData["Title"] = "Editar perfil";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">Editar perfil</h1>
+        <p class="page-subtitle">Actualiza tus datos personales de contacto.</p>
+    </div>
+</div>
+
+<div class="profile-form-card">
+    <form asp-action="Editar" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="profile-grid">
+            <div>
+                <label asp-for="TipoDocumento" class="form-label">Tipo documento</label>
+                <input asp-for="TipoDocumento" class="form-control" />
+                <span asp-validation-for="TipoDocumento" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="NumeroDocumento" class="form-label">Número documento</label>
+                <input asp-for="NumeroDocumento" class="form-control" />
+                <span asp-validation-for="NumeroDocumento" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Nombres" class="form-label">Nombres</label>
+                <input asp-for="Nombres" class="form-control" />
+                <span asp-validation-for="Nombres" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Apellidos" class="form-label">Apellidos</label>
+                <input asp-for="Apellidos" class="form-control" />
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+
+            <div class="full">
+                <label asp-for="Telefono" class="form-label">Teléfono</label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+
+            <div class="full">
+                <label asp-for="Direccion" class="form-label">Dirección</label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

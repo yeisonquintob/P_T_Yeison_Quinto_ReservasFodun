@@ -1,0 +1,56 @@
+@model ReservasFodun.Application.DTOs.Tarifas.ConsultarTarifaRequest
+
+@{
+    ViewData["Title"] = "Consultar tarifas";
+    var sedes = ViewBag.Sedes as IEnumerable<ReservasFodun.Application.DTOs.Alojamientos.SedeDto>
+        ?? Enumerable.Empty<ReservasFodun.Application.DTOs.Alojamientos.SedeDto>();
+}
+
+<div class="container py-4">
+    <h2>Consultar tarifas</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Consultar" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Sede</label>
+                    <select class="form-select" asp-for="IdSede">
+                        <option value="">Seleccione una sede</option>
+                        @foreach (var sede in sedes)
+                        {
+                            <option value="@sede.IdSede">@sede.NombreSede</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="IdAlojamiento" class="form-label">Id Alojamiento</label>
+                        <input asp-for="IdAlojamiento" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="IdTemporada" class="form-label">Id Temporada</label>
+                        <input asp-for="IdTemporada" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="NumeroPersonas" class="form-label">Personas</label>
+                        <input asp-for="NumeroPersonas" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="NumeroHabitaciones" class="form-label">Habitaciones</label>
+                        <input asp-for="NumeroHabitaciones" class="form-control" />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Consultar</button>
+            </form>
+        </div>
+    </div>
+</div>

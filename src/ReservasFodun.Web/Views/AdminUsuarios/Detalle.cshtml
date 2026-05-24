@@ -1,0 +1,100 @@
+﻿@model ReservasFodun.Web.ViewModels.Admin.AdminUsuarioDetalleViewModel
+
+@{
+    ViewData["Title"] = "Detalle usuario";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">@Model.UserName</h1>
+        <p class="page-subtitle">Detalle administrativo del usuario.</p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+    </div>
+</div>
+
+<div class="section-card">
+    <dl class="row mb-0">
+        <dt class="col-sm-4">Código Identity</dt>
+        <dd class="col-sm-8">@Model.Id</dd>
+
+        <dt class="col-sm-4">Usuario</dt>
+        <dd class="col-sm-8">@Model.UserName</dd>
+
+        <dt class="col-sm-4">Correo</dt>
+        <dd class="col-sm-8">@Model.Email</dd>
+
+        <dt class="col-sm-4">Correo confirmado</dt>
+        <dd class="col-sm-8">@(Model.EmailConfirmed ? "Sí" : "No")</dd>
+
+        <dt class="col-sm-4">Teléfono</dt>
+        <dd class="col-sm-8">@(Model.PhoneNumber ?? "No registrado")</dd>
+
+        <dt class="col-sm-4">Teléfono confirmado</dt>
+        <dd class="col-sm-8">@(Model.PhoneNumberConfirmed ? "Sí" : "No")</dd>
+
+        <dt class="col-sm-4">Doble factor</dt>
+        <dd class="col-sm-8">@(Model.TwoFactorEnabled ? "Activo" : "Inactivo")</dd>
+
+        <dt class="col-sm-4">Intentos fallidos</dt>
+        <dd class="col-sm-8">@Model.AccessFailedCount</dd>
+
+        <dt class="col-sm-4">Estado</dt>
+        <dd class="col-sm-8">
+            @if (Model.EstaBloqueado)
+            {
+                <span class="badge bg-secondary">Bloqueado</span>
+            }
+            else
+            {
+                <span class="badge bg-dark">Activo</span>
+            }
+        </dd>
+
+        <dt class="col-sm-4">Roles</dt>
+        <dd class="col-sm-8">
+            @if (Model.Roles.Any())
+            {
+                @string.Join(", ", Model.Roles)
+            }
+            else
+            {
+                <span>No tiene roles asignados</span>
+            }
+        </dd>
+    </dl>
+
+    <div class="d-flex flex-wrap gap-2 mt-4">
+        @if (!Model.EmailConfirmed)
+        {
+            <form asp-action="ConfirmarCorreo" method="post" class="m-0">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-outline-primary">Confirmar correo</button>
+            </form>
+        }
+
+        @if (Model.EstaBloqueado)
+        {
+            <form asp-action="Desbloquear" method="post" class="m-0">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-outline-primary">Desbloquear</button>
+            </form>
+        }
+        else
+        {
+            <form asp-action="Bloquear" method="post" class="m-0">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-outline-secondary"
+                        onclick="return confirm('¿Seguro que deseas bloquear este usuario?');">
+                    Bloquear
+                </button>
+            </form>
+        }
+    </div>
+</div>

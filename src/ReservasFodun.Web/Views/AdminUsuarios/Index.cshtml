@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ReservasFodun.Web.ViewModels.Admin.AdminUsuarioListaViewModel>
+
+@{
+    ViewData["Title"] = "Administrar usuarios";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">Administrar usuarios</h1>
+        <p class="page-subtitle">Consulta, edita, bloquea y desbloquea usuarios registrados en el sistema.</p>
+    </div>
+</div>
+
+@if (Model is null || !Model.Any())
+{
+    <div class="alert alert-info">No hay usuarios registrados.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Correo confirmado</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model)
+                {
+                    <tr>
+                        <td><strong>@usuario.UserName</strong></td>
+                        <td>@usuario.Email</td>
+                        <td>@(usuario.PhoneNumber ?? "No registrado")</td>
+                        <td>
+                            @if (usuario.EmailConfirmed)
+                            {
+                                <span class="badge bg-dark">Sí</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">No</span>
+                            }
+                        </td>
+                        <td>
+                            @if (usuario.EstaBloqueado)
+                            {
+                                <span class="badge bg-secondary">Bloqueado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-dark">Activo</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Detalle" asp-route-id="@usuario.Id" class="btn btn-outline-primary btn-sm">Ver</a>
+                                <a asp-action="Editar" asp-route-id="@usuario.Id" class="btn btn-primary btn-sm">Editar</a>
+
+                                @if (usuario.EstaBloqueado)
+                                {
+                                    <form asp-action="Desbloquear" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@usuario.Id" />
+                                        <button type="submit" class="btn btn-outline-primary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas desbloquear este usuario?');">
+                                            Desbloquear
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Bloquear" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@usuario.Id" />
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas bloquear este usuario?');">
+                                            Bloquear
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

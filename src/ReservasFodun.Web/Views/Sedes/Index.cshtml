@@ -1,0 +1,62 @@
+@model IEnumerable<ReservasFodun.Application.DTOs.Alojamientos.SedeDto>
+
+@{
+    ViewData["Title"] = "Sedes";
+}
+
+<div class="container py-4">
+    <h2 class="mb-3">Sedes disponibles</h2>
+
+    @if (TempData["Error"] is not null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No hay sedes disponibles para mostrar.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var sede in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@sede.NombreSede</h5>
+
+                            <p class="card-text mb-1">
+                                <strong>Tipo:</strong> @sede.TipoSede
+                            </p>
+
+                            <p class="card-text mb-1">
+                                <strong>Ubicación:</strong> @sede.Municipio, @sede.Departamento
+                            </p>
+
+                            <p class="card-text mb-1">
+                                <strong>Capacidad:</strong> @sede.CapacidadTotal personas
+                            </p>
+
+                            <p class="card-text text-muted">
+                                @sede.Descripcion
+                            </p>
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+                            <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@sede.IdSede">
+                                Ver detalle
+                            </a>
+
+                            <a class="btn btn-outline-success btn-sm" asp-controller="Disponibilidad" asp-action="Index">
+                                Consultar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

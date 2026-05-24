@@ -1,0 +1,76 @@
+﻿@model ReservasFodun.Application.DTOs.Admin.SedeAdminDto
+
+@{
+    ViewData["Title"] = "Detalle sede";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">@Model.NombreSede</h1>
+        <p class="page-subtitle">Detalle administrativo de la sede.</p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-action="Editar" asp-route-id="@Model.IdSede" class="btn btn-primary">Editar</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+    </div>
+</div>
+
+<div class="section-card">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h5>Información general</h5>
+
+            <dl class="row mb-0">
+                <dt class="col-sm-5">Código</dt>
+                <dd class="col-sm-7">@Model.IdSede</dd>
+
+                <dt class="col-sm-5">Nombre</dt>
+                <dd class="col-sm-7">@Model.NombreSede</dd>
+
+                <dt class="col-sm-5">Nombre corto</dt>
+                <dd class="col-sm-7">@(Model.NombreCorto ?? "No registrado")</dd>
+
+                <dt class="col-sm-5">Tipo de sede</dt>
+                <dd class="col-sm-7">@(Model.TipoSede ?? "No registrado")</dd>
+
+                <dt class="col-sm-5">Estado</dt>
+                <dd class="col-sm-7">
+                    @if (Model.Activo)
+                    {
+                        <span class="badge bg-dark">Activa</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactiva</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <h5>Ubicación y capacidad</h5>
+
+            <dl class="row mb-0">
+                <dt class="col-sm-5">Municipio</dt>
+                <dd class="col-sm-7">@(Model.Municipio ?? "No registrado")</dd>
+
+                <dt class="col-sm-5">Departamento</dt>
+                <dd class="col-sm-7">@(Model.Departamento ?? "No registrado")</dd>
+
+                <dt class="col-sm-5">Dirección</dt>
+                <dd class="col-sm-7">@(Model.Direccion ?? "No registrada")</dd>
+
+                <dt class="col-sm-5">Capacidad total</dt>
+                <dd class="col-sm-7">@Model.CapacidadTotal</dd>
+            </dl>
+        </div>
+
+        <div class="col-12">
+            <h5>Descripción</h5>
+            <p class="text-muted mb-0">
+                @(string.IsNullOrWhiteSpace(Model.Descripcion) ? "No se registró descripción." : Model.Descripcion)
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ReservasFodun.Application.DTOs.Admin.TemporadaAdminDto>
+
+@{
+    ViewData["Title"] = "Administrar temporadas";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">Administrar temporadas</h1>
+        <p class="page-subtitle">Gestiona temporadas altas, especiales y ordinarias para el cálculo de tarifas.</p>
+    </div>
+
+    <a asp-action="Crear" class="btn btn-primary">Crear temporada</a>
+</div>
+
+@if (Model is null || !Model.Any())
+{
+    <div class="alert alert-info">No hay temporadas registradas.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Tarifas</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var temporada in Model)
+                {
+                    <tr>
+                        <td>@temporada.IdTemporada</td>
+                        <td>
+                            <strong>@temporada.Nombre</strong>
+                            <div class="text-muted small">@(temporada.Descripcion ?? "Sin descripción")</div>
+                        </td>
+                        <td>
+                            @if (temporada.EsAlta)
+                            {
+                                <span class="badge bg-dark">Alta</span>
+                            }
+
+                            @if (temporada.EsEspecial)
+                            {
+                                <span class="badge bg-secondary">Especial</span>
+                            }
+
+                            @if (!temporada.EsAlta && !temporada.EsEspecial)
+                            {
+                                <span class="badge bg-light text-dark">Ordinaria</span>
+                            }
+                        </td>
+                        <td>@temporada.TotalTarifas</td>
+                        <td>
+                            @if (temporada.Activo)
+                            {
+                                <span class="badge bg-dark">Activa</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactiva</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Detalle" asp-route-id="@temporada.IdTemporada" class="btn btn-outline-primary btn-sm">Ver</a>
+                                <a asp-action="Editar" asp-route-id="@temporada.IdTemporada" class="btn btn-primary btn-sm">Editar</a>
+
+                                @if (temporada.Activo)
+                                {
+                                    <form asp-action="Inactivar" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@temporada.IdTemporada" />
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas inactivar esta temporada?');">
+                                            Inactivar
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Activar" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@temporada.IdTemporada" />
+                                        <button type="submit" class="btn btn-outline-primary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas activar esta temporada?');">
+                                            Activar
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ReservasFodun.Application.DTOs.Admin.TarifaAdminDto>
+
+@{
+    ViewData["Title"] = "Administrar tarifas";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="page-title">Administrar tarifas</h1>
+        <p class="page-subtitle">Gestiona tarifas por sede, alojamiento, temporada y número de personas.</p>
+    </div>
+
+    <a asp-action="Crear" class="btn btn-primary">Crear tarifa</a>
+</div>
+
+@if (Model is null || !Model.Any())
+{
+    <div class="alert alert-info">No hay tarifas registradas.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Sede</th>
+                    <th>Alojamiento</th>
+                    <th>Temporada</th>
+                    <th>Base</th>
+                    <th>Adicional</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tarifa in Model)
+                {
+                    <tr>
+                        <td>@tarifa.IdTarifa</td>
+                        <td>@tarifa.NombreSede</td>
+                        <td>@(tarifa.NombreAlojamiento ?? "No aplica")</td>
+                        <td>@tarifa.NombreTemporada</td>
+                        <td>@tarifa.TarifaBase.ToString("C0")</td>
+                        <td>@tarifa.ValorPersonaAdicional.ToString("C0")</td>
+                        <td>
+                            @if (tarifa.Activo)
+                            {
+                                <span class="badge bg-dark">Activa</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactiva</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Detalle" asp-route-id="@tarifa.IdTarifa" class="btn btn-outline-primary btn-sm">Ver</a>
+                                <a asp-action="Editar" asp-route-id="@tarifa.IdTarifa" class="btn btn-primary btn-sm">Editar</a>
+
+                                @if (tarifa.Activo)
+                                {
+                                    <form asp-action="Inactivar" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@tarifa.IdTarifa" />
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas inactivar esta tarifa?');">
+                                            Inactivar
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Activar" method="post" class="m-0">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@tarifa.IdTarifa" />
+                                        <button type="submit" class="btn btn-outline-primary btn-sm"
+                                                onclick="return confirm('¿Seguro que deseas activar esta tarifa?');">
+                                            Activar
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

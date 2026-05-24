@@ -1,0 +1,46 @@
+@model IEnumerable<ReservasFodun.Application.DTOs.Tarifas.TarifaDto>
+
+@{
+    ViewData["Title"] = "Resultados de tarifas";
+}
+
+<div class="container py-4">
+    <a class="btn btn-link px-0 mb-3" asp-action="Consultar">? Nueva consulta</a>
+
+    <h2>Resultados de tarifas</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">No se encontraron tarifas con los filtros enviados.</div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Sede</th>
+                    <th>Alojamiento</th>
+                    <th>Temporada</th>
+                    <th>Personas incluidas</th>
+                    <th>Tarifa base</th>
+                    <th>Persona adicional</th>
+                    <th>Tipo tarifa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tarifa in Model)
+                {
+                    <tr>
+                        <td>@tarifa.NombreSede</td>
+                        <td>@tarifa.NombreAlojamiento</td>
+                        <td>@tarifa.NombreTemporada</td>
+                        <td>@tarifa.PersonasIncluidas</td>
+                        <td>@tarifa.TarifaBase.ToString("C0")</td>
+                        <td>@tarifa.ValorPersonaAdicional.ToString("C0")</td>
+                        <td>@tarifa.TipoTarifa</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

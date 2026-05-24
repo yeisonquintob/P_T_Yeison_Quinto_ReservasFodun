@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ReservasFodun</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ReservasFodun.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-xl navbar-dark luxury-navbar">
+            <div class="container">
+                <a class="navbar-brand app-brand" asp-controller="Home" asp-action="Index">
+                    <span class="brand-icon">RF</span>
+                    <span>ReservasFodun</span>
+                </a>
+
+                <button class="navbar-toggler app-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Sedes" asp-action="Index">Sedes</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Disponibilidad" asp-action="Index">Disponibilidad</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Tarifas" asp-action="Consultar">Tarifas</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Tarifas" asp-action="Calcular">Calcular reserva</a>
+                        </li>
+
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Reservas" asp-action="MisReservas">Mis reservas</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Perfil" asp-action="Editar">Mi perfil</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Administración
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end luxury-dropdown" aria-labelledby="adminDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminSedes" asp-action="Index">Sedes</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminAlojamientos" asp-action="Index">Alojamientos</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminTiposAlojamiento" asp-action="Index">Tipos de alojamiento</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminTemporadas" asp-action="Index">Temporadas</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminServiciosAdicionales" asp-action="Index">Servicios adicionales</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminTarifas" asp-action="Index">Tarifas</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="AdminUsuarios" asp-action="Index">Usuarios</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="app-login-area">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="app-main">
+        <div class="container">
+            <partial name="_Alertas" />
+
+            <section class="page-shell">
+                @RenderBody()
+            </section>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <span>&copy; @DateTime.Now.Year - ReservasFodun</span>
+            <span>Sistema de reservas para sedes recreativas y alojamientos</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+
+
+

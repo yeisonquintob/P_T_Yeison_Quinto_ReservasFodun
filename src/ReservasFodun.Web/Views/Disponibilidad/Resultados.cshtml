@@ -1,0 +1,62 @@
+@model IEnumerable<ReservasFodun.Application.DTOs.Alojamientos.AlojamientoDisponibleDto>
+
+@{
+    ViewData["Title"] = "Resultados de disponibilidad";
+}
+
+<div class="container py-4">
+    <a class="btn btn-link px-0 mb-3" asp-action="Index">? Nueva búsqueda</a>
+
+    <h2>Resultados de disponibilidad</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            No se encontraron alojamientos disponibles con los filtros seleccionados.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.NombreAlojamiento</h5>
+                            <p class="card-text mb-1"><strong>Sede:</strong> @item.NombreSede</p>
+                            <p class="card-text mb-1"><strong>Tipo:</strong> @item.TipoAlojamiento</p>
+                            <p class="card-text mb-1"><strong>Habitaciones:</strong> @item.NumeroHabitaciones</p>
+                            <p class="card-text mb-1"><strong>Capacidad:</strong> @item.CapacidadMaxima personas</p>
+                            <p class="card-text mb-1"><strong>Noches:</strong> @item.NumeroNoches</p>
+
+                            @if (item.Disponible)
+                            {
+                                <span class="badge bg-success">Disponible</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">No disponible</span>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(item.ObservacionDisponibilidad))
+                            {
+                                <p class="text-muted mt-2">@item.ObservacionDisponibilidad</p>
+                            }
+                        </div>
+
+                        <div class="card-footer bg-white border-0">
+                            <a class="btn btn-primary btn-sm" asp-controller="Tarifas" asp-action="Calcular">
+                                Calcular tarifa
+                            </a>
+
+                            <a class="btn btn-outline-success btn-sm" asp-controller="Reservas" asp-action="Confirmar">
+                                Reservar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

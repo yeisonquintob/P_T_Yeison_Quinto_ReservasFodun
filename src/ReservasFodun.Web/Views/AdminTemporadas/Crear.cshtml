@@ -1,0 +1,29 @@
+﻿@model ReservasFodun.Application.DTOs.Admin.TemporadaFormularioRequest
+
+@{
+    ViewData["Title"] = "Crear temporada";
+}
+
+<div class="mb-4">
+    <h1 class="page-title">Crear temporada</h1>
+    <p class="page-subtitle">Registra una nueva temporada para la gestión de tarifas.</p>
+</div>
+
+<div class="section-card">
+    <form asp-action="Crear" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <partial name="_FormularioTemporada" model="Model" />
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Guardar temporada</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

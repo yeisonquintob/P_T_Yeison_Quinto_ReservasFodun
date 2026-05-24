@@ -1,0 +1,32 @@
+﻿@model ReservasFodun.Application.DTOs.Admin.ServicioAdicionalFormularioRequest
+
+@{
+    ViewData["Title"] = "Editar servicio adicional";
+}
+
+<div class="mb-4">
+    <h1 class="page-title">Editar servicio adicional</h1>
+    <p class="page-subtitle">Actualiza la información del servicio adicional seleccionado.</p>
+</div>
+
+<div class="section-card">
+    <form asp-action="Editar" method="post">
+        @Html.AntiForgeryToken()
+
+        <input asp-for="IdServicioAdicional" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <partial name="_FormularioServicioAdicional" model="Model" />
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <a asp-action="Detalle" asp-route-id="@Model.IdServicioAdicional" class="btn btn-outline-primary">Ver detalle</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

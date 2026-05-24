@@ -1,0 +1,36 @@
+﻿@model ReservasFodun.Application.DTOs.Admin.TemporadaFormularioRequest
+
+<div class="row g-3">
+    <div class="col-md-12">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-12">
+        <label asp-for="Descripcion" class="form-label"></label>
+        <textarea asp-for="Descripcion" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-check">
+            <input asp-for="EsAlta" class="form-check-input" />
+            <label asp-for="EsAlta" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-check">
+            <input asp-for="EsEspecial" class="form-check-input" />
+            <label asp-for="EsEspecial" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-check">
+            <input asp-for="Activo" class="form-check-input" />
+            <label asp-for="Activo" class="form-check-label"></label>
+        </div>
+    </div>
+</div>

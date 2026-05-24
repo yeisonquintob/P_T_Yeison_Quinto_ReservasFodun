@@ -1,0 +1,26 @@
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
+namespace ReservasFodun.Web.Extensions;
+
+public static class TempDataExtensions
+{
+    public static void Success(this ITempDataDictionary tempData, string message)
+    {
+        tempData["SuccessMessage"] = message;
+    }
+
+    public static void Error(this ITempDataDictionary tempData, string message)
+    {
+        tempData["ErrorMessage"] = message;
+    }
+
+    public static void Warning(this ITempDataDictionary tempData, string message)
+    {
+        tempData["WarningMessage"] = message;
+    }
+
+    public static void Info(this ITempDataDictionary tempData, string message)
+    {
+        tempData["InfoMessage"] = message;
+    }
+}

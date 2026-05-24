@@ -1,0 +1,46 @@
+@model ReservasFodun.Application.DTOs.Tarifas.CalcularValorReservaResponse
+
+@{
+    ViewData["Title"] = "Resultado cálculo";
+}
+
+<div class="container py-4">
+    <a class="btn btn-link px-0 mb-3" asp-action="Calcular">? Nuevo cálculo</a>
+
+    <h2>Resultado del cálculo</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5>@Model.NombreSede</h5>
+            <p class="text-muted">@Model.NombreAlojamiento</p>
+
+            <hr />
+
+            <p><strong>Fecha llegada:</strong> @Model.FechaLlegada.ToShortDateString()</p>
+            <p><strong>Fecha salida:</strong> @Model.FechaSalida.ToShortDateString()</p>
+            <p><strong>Noches:</strong> @Model.NumeroNoches</p>
+            <p><strong>Personas:</strong> @Model.NumeroPersonas</p>
+            <p><strong>Habitaciones:</strong> @Model.NumeroHabitaciones</p>
+
+            <hr />
+
+            <p><strong>Días ordinarios:</strong> @Model.DiasOrdinarios</p>
+            <p><strong>Días especiales:</strong> @Model.DiasEspeciales</p>
+            <p><strong>Tarifa ordinaria:</strong> @Model.ValorTarifaOrdinaria.ToString("C0")</p>
+            <p><strong>Tarifa especial:</strong> @Model.ValorTarifaEspecial.ToString("C0")</p>
+            <p><strong>Personas adicionales:</strong> @Model.ValorPersonasAdicionales.ToString("C0")</p>
+            <p><strong>Lavandería:</strong> @Model.ValorLavanderia.ToString("C0")</p>
+
+            <h4 class="mt-3">Total: @Model.ValorTotal.ToString("C0")</h4>
+
+            @if (!string.IsNullOrWhiteSpace(Model.DetalleCalculo))
+            {
+                <p class="text-muted mt-3">@Model.DetalleCalculo</p>
+            }
+
+            <a class="btn btn-success mt-3" asp-controller="Reservas" asp-action="Confirmar">
+                Continuar con reserva
+            </a>
+        </div>
+    </div>
+</div>

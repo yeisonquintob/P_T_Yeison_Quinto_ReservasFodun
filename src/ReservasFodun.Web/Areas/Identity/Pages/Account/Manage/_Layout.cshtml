@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="identity-header mb-4">
+    <h1 class="page-title">Administrar cuenta</h1>
+    <p class="page-subtitle">Gestiona la información y seguridad de tu cuenta.</p>
+</div>
+
+<hr class="mb-4" />
+
+<div class="row g-4">
+    <div class="col-lg-3">
+        <partial name="_ManageNav" />
+    </div>
+
+    <div class="col-lg-9">
+        @RenderBody()
+    </div>
+</div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
